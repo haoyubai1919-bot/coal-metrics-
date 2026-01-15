@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>原煤指标</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- 左侧 Workbook 导航栏 -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>原煤指标</h2>
+        <button id="btnNewWorkbook" class="btn-icon" title="新建工作簿">+</button>
+      </div>
+      <div class="workbook-list" id="workbookList">
+        <!-- 工作簿列表将通过 JavaScript 动态生成 -->
+      </div>
+    </aside>
+
+    <!-- 主内容区域 -->
+    <div class="main-content">
+      <!-- 页面标题和工具栏 -->
+      <header class="header">
+        <div class="header-top">
+          <h1 class="title" id="workbookTitle">原煤指标</h1>
+          <button id="btnToggleSidebar" class="btn-icon mobile-only" title="切换侧边栏">☰</button>
+        </div>
+        <div class="toolbar">
+          <button id="btnAdd" class="btn btn-primary" title="在末尾添加新行">新增一行</button>
+          <button id="btnDelete" class="btn btn-danger" title="删除选中的行">删除选中</button>
+          <button id="btnSave" class="btn btn-success" title="保存当前工作簿">保存</button>
+          <button id="btnSaveAs" class="btn btn-success" title="另存为新工作簿">另存为</button>
+          <button id="btnExport" class="btn btn-info" title="导出为CSV文件">导出CSV</button>
+          <button id="btnReset" class="btn btn-secondary" title="重置为初始状态">重置</button>
+        </div>
+      </header>
+
+      <!-- 表格容器 -->
+      <div class="table-wrapper">
+        <table id="dataTable" class="data-table">
+        <thead>
+          <tr>
+            <th class="checkbox-col">
+              <input type="checkbox" id="selectAll" title="全选/取消全选" aria-label="全选">
+            </th>
+            <th>序号</th>
+            <th>日期</th>
+            <th>单位</th>
+            <th class="num-col">入库</th>
+            <th class="num-col">全灰</th>
+            <th class="num-col">内灰</th>
+            <th class="num-col">硫</th>
+            <th class="num-col">挥发</th>
+            <th class="num-col">粘结</th>
+            <th class="num-col">中煤</th>
+            <th class="num-col">矸石</th>
+            <th class="num-col sum-col">内灰合计</th>
+            <th class="num-col sum-col">挥发合计</th>
+            <th class="num-col sum-col">粘结合计</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- 数据行将通过 JavaScript 动态生成 -->
+        </tbody>
+        <tfoot id="tableFoot">
+          <tr class="total-row">
+            <td></td>
+            <td>合计</td>
+            <td></td>
+            <td></td>
+            <td class="num-col" id="total-inbound">0</td>
+            <td class="num-col" id="total-ash_total">0</td>
+            <td class="num-col" id="total-ash_internal">0</td>
+            <td class="num-col" id="total-sulfur">0</td>
+            <td class="num-col" id="total-volatile">0</td>
+            <td class="num-col" id="total-caking">0</td>
+            <td class="num-col" id="total-middlings">0</td>
+            <td class="num-col" id="total-gangue">0</td>
+            <td class="num-col sum-col" id="total-ash_internal_sum">0</td>
+            <td class="num-col sum-col" id="total-volatile_sum">0</td>
+            <td class="num-col sum-col" id="total-caking_sum">0</td>
+          </tr>
+          <tr class="avg-row">
+            <td></td>
+            <td>平均</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="num-col">—</td>
+            <td class="num-col">—</td>
+            <td class="num-col" id="avg-ash_internal">0.00</td>
+            <td class="num-col">—</td>
+            <td class="num-col" id="avg-volatile">0.00</td>
+            <td class="num-col" id="avg-caking">0.00</td>
+            <td class="num-col">—</td>
+            <td class="num-col">—</td>
+            <td class="num-col sum-col" id="avg-ash_internal_sum">0.00</td>
+            <td class="num-col sum-col" id="avg-volatile_sum">0.00</td>
+            <td class="num-col sum-col" id="avg-caking_sum">0.00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+      <!-- 提示信息 -->
+      <div id="toast" class="toast"></div>
+    </div>
+  </div>
+
+  <!-- 保存工作簿对话框 -->
+  <div id="saveDialog" class="modal">
+    <div class="modal-content">
+      <h3>保存工作簿</h3>
+      <input type="text" id="workbookNameInput" class="input-text" placeholder="请输入工作簿名称" />
+      <div class="modal-actions">
+        <button id="btnConfirmSave" class="btn btn-success">确定</button>
+        <button id="btnCancelSave" class="btn btn-secondary">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="utils/math.js"></script>
+  <script src="utils/csv.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
